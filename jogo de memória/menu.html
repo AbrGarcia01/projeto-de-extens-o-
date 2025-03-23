@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memória do Seu Jeito</title>
+    <link rel="stylesheet" href="css/style-menu.css">
+</head>
+<body>
+    <header>
+        <h1>MEMÓRIA DO SEU JEITO</h1>
+    </header>
+
+    <main>
+        <div id="menu-container" class="menu-container">
+            <button class="menu-button" onclick="showDifficultyMenu()">Jogar</button>
+            <button class="menu-button" onclick="window.location.href='index.html'">Home</button>
+            <button class="menu-button" onclick="window.location.href='sobre.html'">Sobre</button>
+            <button class="menu-button" onclick="window.location.href='creditos.html'">Créditos</button>
+        </div>
+
+        <div id="welcome-message">
+            <h2>Bem-vindo ao Memória do Seu Jeito!</h2>
+            <p>Escolha uma opção no menu para começar.</p>
+        </div>
+
+        <div id="difficulty-menu" class="menu-container hidden">
+            <h2>Dificuldade</h2>
+            <button class="menu-button" onclick="selectDifficulty('facil')">Fácil</button>
+            <button class="menu-button" onclick="selectDifficulty('padrao')">Padrão</button>
+            <button class="menu-button" onclick="selectDifficulty('dificil')">Difícil</button>
+        </div>
+
+        <div id="theme-menu" class="menu-container hidden">
+            <h2>Temas</h2>
+            <button class="menu-button" onclick="startGame(1)">Sala de Aula</button>
+            <button class="menu-button" onclick="startGame(2)">Escritorio</button>
+            <button class="menu-button" onclick="startGame(3)">Loja de Roupa</button>
+            <button class="menu-button" onclick="startGame(4)">Mercado</button>
+            <button class="menu-button" disabled title="Modo Indisponível">Personalizado</button>
+        </div>
+
+        <button id="back-button" class="back-button hidden" onclick="goBack()">Voltar</button>
+    </main>
+    <script src="js/menu_script.js"></script>
+</body>
+</html>
