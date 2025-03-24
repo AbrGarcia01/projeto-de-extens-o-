@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const gameContainer = document.querySelector(".memory-game");
     let playerName = "";
     let gameStarted = false;
-    
+
     // Obtém o tema escolhido na URL
     const urlParams = new URLSearchParams(window.location.search);
     const theme = urlParams.get("theme") || "default";
-    
+
     playerNameInput.addEventListener("input", () => {
         let value = playerNameInput.value;
         if (!/^[a-zA-Z]{3,}[a-zA-Z0-9]{0,17}$/.test(value)) {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             playerNameInput.setCustomValidity("");
         }
     });
-    
+
     startButton.addEventListener("click", () => {
         if (playerNameInput.value.length < 3) {
             alert("Por favor, insira no mínimo 3 letras");
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gameStarted = true;
         startGame();
     });
-    
+
     function startGame() {
         const cards = document.querySelectorAll(".memory-card");
         let hasFlippedCard = false;
@@ -39,33 +39,33 @@ document.addEventListener("DOMContentLoaded", () => {
             card.classList.remove("flip");
             card.addEventListener("click", flipCard);
         });
-        
+
         function flipCard() {
             if (!gameStarted || lockBoard || this === firstCard) return;
             this.classList.add("flip");
-            
+
             if (!hasFlippedCard) {
                 hasFlippedCard = true;
                 firstCard = this;
                 return;
             }
-            
+
             secondCard = this;
             checkForMatch();
         }
-        
+
         function checkForMatch() {
             let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
             isMatch ? disableCards() : unflipCards();
         }
-        
+
         function disableCards() {
             firstCard.removeEventListener("click", flipCard);
             secondCard.removeEventListener("click", flipCard);
             resetBoard();
             checkWinCondition();
         }
-        
+
         function unflipCards() {
             lockBoard = true;
             setTimeout(() => {
@@ -74,12 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 resetBoard();
             }, 1000);
         }
-        
+
         function resetBoard() {
             [hasFlippedCard, lockBoard] = [false, false];
             [firstCard, secondCard] = [null, null];
         }
-        
+
         function checkWinCondition() {
             if (document.querySelectorAll(".memory-card.flip").length === cards.length) {
                 setTimeout(() => {
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 500);
             }
         }
-        
+
         (function shuffle() {
             cards.forEach(card => {
                 let randomPos = Math.floor(Math.random() * cards.length);
@@ -97,9 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         })();
     }
-    
+
     restartButton.addEventListener("click", restartGame);
-    
+
     function restartGame() {
         gameStarted = false;
         document.querySelectorAll(".memory-card").forEach(card => {
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         setTimeout(startGame, 500);
     }
-    
+
     document.addEventListener("keydown", (event) => {
         if (event.key === "Enter" && gameStarted) {
             document.querySelectorAll(".memory-card").forEach(card => {
@@ -123,4 +123,42 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 500);
         }
     });
+
+    // Código de upload e embaralhamento de imagens personalizadas
+    document.getElementById('upload-button').addEventListener('click', function () {
+        document.getElementById('image-upload').click();
+    });
+
+    document.getElementById('image-upload').addEventListener('change', function (event) {
+        const files = Array.from(event.target.files);
+
+        if (files.length !== 8) {
+            alert("Por favor, selecione exatamente 8 imagens.");
+            return;
+        }
+
+        const pairedImages = files.flatMap((file, index) => [{ file, id: index }, { file, id: index }]);
+        const shuffledImages = shuffleImages(pairedImages);
+
+        const cards = document.querySelectorAll('.memory-card');
+
+        shuffledImages.forEach(({ file, id }, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const card = cards[index];
+                const imgFront = card.querySelector('.front-face');
+                imgFront.src = e.target.result;
+                card.dataset.framework = `custom${id}`;
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function shuffleImages(images) {
+        for (let i = images.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [images[i], images[j]] = [images[j], images[i]];
+        }
+        return images;
+    }
 });
