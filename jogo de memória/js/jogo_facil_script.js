@@ -1,0 +1,126 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const playerNameInput = document.getElementById("player-name");
+    const startButton = document.getElementById("start-button");
+    const restartButton = document.getElementById("restart-button");
+    const gameContainer = document.querySelector(".memory-game");
+    let playerName = "";
+    let gameStarted = false;
+    
+    // Obtém o tema escolhido na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const theme = urlParams.get("theme") || "default";
+    
+    playerNameInput.addEventListener("input", () => {
+        let value = playerNameInput.value;
+        if (!/^[a-zA-Z]{3,}[a-zA-Z0-9]{0,17}$/.test(value)) {
+            playerNameInput.setCustomValidity("Por favor, insira no mínimo 3 letras e no máximo 20 caracteres (números permitidos após 3 letras). ");
+        } else {
+            playerNameInput.setCustomValidity("");
+        }
+    });
+    
+    startButton.addEventListener("click", () => {
+        if (playerNameInput.value.length < 3) {
+            alert("Por favor, insira no mínimo 3 letras");
+            return;
+        }
+        playerName = playerNameInput.value;
+        gameStarted = true;
+        startGame();
+    });
+    
+    function startGame() {
+        const cards = document.querySelectorAll(".memory-card");
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
+
+        cards.forEach(card => {
+            card.classList.remove("flip");
+            card.addEventListener("click", flipCard);
+        });
+        
+        function flipCard() {
+            if (!gameStarted || lockBoard || this === firstCard) return;
+            this.classList.add("flip");
+            
+            if (!hasFlippedCard) {
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
+            
+            secondCard = this;
+            checkForMatch();
+        }
+        
+        function checkForMatch() {
+            let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+            isMatch ? disableCards() : unflipCards();
+        }
+        
+        function disableCards() {
+            firstCard.removeEventListener("click", flipCard);
+            secondCard.removeEventListener("click", flipCard);
+            resetBoard();
+            checkWinCondition();
+        }
+        
+        function unflipCards() {
+            lockBoard = true;
+            setTimeout(() => {
+                firstCard.classList.remove("flip");
+                secondCard.classList.remove("flip");
+                resetBoard();
+            }, 1000);
+        }
+        
+        function resetBoard() {
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+        
+        function checkWinCondition() {
+            if (document.querySelectorAll(".memory-card.flip").length === cards.length) {
+                setTimeout(() => {
+                    if (confirm(`Parabéns, ${playerName}! Você venceu! Deseja jogar novamente?`)) {
+                        restartGame();
+                    }
+                }, 500);
+            }
+        }
+        
+        (function shuffle() {
+            cards.forEach(card => {
+                let randomPos = Math.floor(Math.random() * cards.length);
+                card.style.order = randomPos;
+            });
+        })();
+    }
+    
+    restartButton.addEventListener("click", restartGame);
+    
+    function restartGame() {
+        gameStarted = false;
+        document.querySelectorAll(".memory-card").forEach(card => {
+            card.classList.remove("flip");
+            card.removeEventListener("click", flipCard);
+        });
+        setTimeout(startGame, 500);
+    }
+    
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && gameStarted) {
+            document.querySelectorAll(".memory-card").forEach(card => {
+                card.classList.add("flip");
+                card.removeEventListener("click", flipCard);
+            });
+            setTimeout(() => {
+                alert(`Parabéns, ${playerName}! Você venceu automaticamente!`);
+                if (confirm("Deseja jogar novamente?")) {
+                    restartGame();
+                }
+            }, 500);
+        }
+    });
+});
