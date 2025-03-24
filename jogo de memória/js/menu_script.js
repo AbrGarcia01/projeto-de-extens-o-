@@ -3,6 +3,7 @@ function showDifficultyMenu() {
     document.getElementById("difficulty-menu").classList.remove("hidden");
     document.getElementById("back-button").classList.remove("hidden");
     document.getElementById("welcome-message").classList.add("hidden");
+    document.getElementById("footer").classList.add("hidden");
 }
 
 let selectedDifficulty = ''; // Armazena a dificuldade selecionada
@@ -26,8 +27,34 @@ function startGame(theme) {
         alert("Por favor, selecione um tema!");
         return;
     }
-    // Redireciona para o jogo com os parâmetros escolhidos
-    window.location.href = `jogo.html?dificuldade=${selectedDifficulty}&tema=${theme}`;
+    
+    if (theme === "personalizado") {
+        importCustomTheme();
+    } else {
+        redirectToGame(selectedDifficulty, theme);
+    }
+}
+
+function importCustomTheme() {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.addEventListener("change", function (event) {
+        let file = event.target.files[0];
+        if (!file) {
+            alert("Por favor, selecione uma imagem para o tema personalizado.");
+            return;
+        }
+        let imageUrl = URL.createObjectURL(file);
+        localStorage.setItem("customTheme", imageUrl);
+        redirectToGame(selectedDifficulty, "personalizado");
+    });
+    input.click();
+}
+
+function redirectToGame(difficulty, theme) {
+    let gamePage = "jogo_" + difficulty + ".html";
+    window.location.href = `${gamePage}?tema=${theme}`;
 }
 
 function goBack() {
@@ -42,5 +69,6 @@ function goBack() {
         document.getElementById("menu-container").classList.remove("hidden");
         document.getElementById("back-button").classList.add("hidden");
         document.getElementById("welcome-message").classList.remove("hidden");
+        document.getElementById("footer").classList.remove("hidden"); 
     }
 }
