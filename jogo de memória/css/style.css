@@ -12,16 +12,27 @@ body {
 }
 
 header {
-    background-color: #74a6c7; /* Cor original */
+    background-color: #74a6c7;
     color: white;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #4e8cc3; 
+    border-bottom: 3px solid #4e8cc3;
 }
 
-header .logo h1 {
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre a logo e o título */
+}
+
+.logo-container .logo {
+    height: 50px; /* Ajuste conforme necessário */
+    width: auto;
+}
+
+header .logo-container h1 {
     font-size: 32px;
     text-shadow: 2px 2px #333; /* Efeito de sombra */
     margin: 0;
@@ -93,6 +104,15 @@ footer {
     header {
         flex-direction: column;
         align-items: center;
+    }
+
+    .logo-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .logo-container .logo {
+        height: 40px; /* Reduz o tamanho da logo em telas menores */
     }
 
     nav ul {
