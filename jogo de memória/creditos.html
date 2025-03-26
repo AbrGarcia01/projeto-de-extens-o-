@@ -5,21 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créditos</title>
     <link rel="stylesheet" href="css/style.css"> <!-- Link para o CSS externo -->
+    <style>
+        html, body {
+    height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        section {
+            flex: 1;
+            padding: 50px; /* Aumenta o espaçamento interno */
+            margin: 50px auto; /* Aumenta o espaçamento externo */
+            background-color: white;
+            border-radius: 12px; /* Mantém um design mais suave */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra mais visível */
+            max-width: 1000px; /* Aumenta a largura máxima */
+            width: 90%; /* Mantém responsividade */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            border-top: 3px solid #74a6c7;
+        }
+    </style>
 </head>
 <body>
-
     <header>
-        <div class="logo">
-            <h1>Créditos do Projeto</h1>
+        <div class="logo-container">
+            <img src="logo_katakana.png" alt="Logo Katakana" class="logo">
+            <h1>Memória do Seu Jeito</h1>
         </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <li><a href="menu.html">Jogo da Memória</a></li>
-                </ul>
-            </nav>
-    </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="menu.html">Jogo da Memória</a></li>
+                <li><a href="creditos.html">Créditos</a></li>
+            </ul>
+        </nav>
+    </header>    
 
     <section>
         <h2>Responsáveis pelo Projeto</h2>
@@ -40,7 +71,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Projeto Acadêmico. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Memória do Seu Jeito. Todos os direitos reservados.</p>
     </footer>
 
 </body>
