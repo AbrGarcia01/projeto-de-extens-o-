@@ -1,10 +1,27 @@
 function showDifficultyMenu() {
     document.getElementById("menu-container").classList.add("hidden");
-    document.getElementById("difficulty-menu").classList.remove("hidden");
-    document.getElementById("back-button").classList.remove("hidden");
-    document.getElementById("welcome-message").classList.add("hidden");
-    document.getElementById("footer").classList.add("hidden");
+    document.getElementById("dificuldade-menu").classList.remove("hidden");
+    document.getElementById("voltar-button").classList.remove("hidden");
+    document.getElementById("bemvindo-message").classList.add("hidden");
 }
+
+function showRegistrationMenu() {
+    document.getElementById("menu-container").classList.add("hidden");
+    document.getElementById("registro-menu").classList.remove("hidden");
+    document.getElementById("voltar-button").classList.remove("hidden");
+    document.getElementById("bemvindo-message").classList.add("hidden");
+}
+
+function selectRegistration(useRegistration) {
+    if (useRegistration) {
+        alert("A funcionalidade de registro será adicionada em breve!");
+        // Aqui, no futuro, podemos redirecionar para uma tela de registro
+    } else {
+        document.getElementById("registro-menu").classList.add("hidden"); // Oculta o menu de registro
+        showDifficultyMenu();
+    }
+}
+
 
 let selectedDifficulty = ''; // Armazena a dificuldade selecionada
 
@@ -14,8 +31,8 @@ function selectDifficulty(difficulty) {
 }
 
 function showThemeMenu() {
-    document.getElementById("difficulty-menu").classList.add("hidden");
-    document.getElementById("theme-menu").classList.remove("hidden");
+    document.getElementById("dificuldade-menu").classList.add("hidden");
+    document.getElementById("tema-menu").classList.remove("hidden");
 }
 
 function startGame(theme) {
@@ -58,17 +75,21 @@ function redirectToGame(difficulty, theme) {
 }
 
 function goBack() {
-    const themeMenu = document.getElementById("theme-menu");
-    const difficultyMenu = document.getElementById("difficulty-menu");
-    
+    const themeMenu = document.getElementById("tema-menu");
+    const difficultyMenu = document.getElementById("dificuldade-menu");
+    const registrationMenu = document.getElementById("registro-menu");
+
     if (!themeMenu.classList.contains("hidden")) {
         themeMenu.classList.add("hidden");
         difficultyMenu.classList.remove("hidden");
     } else if (!difficultyMenu.classList.contains("hidden")) {
         difficultyMenu.classList.add("hidden");
+        registrationMenu.classList.remove("hidden");
+    } else if (!registrationMenu.classList.contains("hidden")) {
+        registrationMenu.classList.add("hidden");
         document.getElementById("menu-container").classList.remove("hidden");
-        document.getElementById("back-button").classList.add("hidden");
-        document.getElementById("welcome-message").classList.remove("hidden");
-        document.getElementById("footer").classList.remove("hidden"); 
+        document.getElementById("voltar-button").classList.add("hidden");
+        document.getElementById("bemvindo-message").classList.remove("hidden");
     }
 }
+
