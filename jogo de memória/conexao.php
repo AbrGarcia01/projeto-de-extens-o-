@@ -2,8 +2,8 @@
 // Configuração do banco de dados
 $servername = "localhost"; // Servidor do banco de dados
 $username = "root";        // Usuário do MySQL (padrão no WAMP é 'root')
-$password = "";            // Senha do MySQL (padrão no WAMP é vazia)
-$dbname = "jogo_memoria";  // Nome do banco de dados
+$password = "";      // Senha do MySQL (padrão no WAMP é vazia)
+$dbname = "memoria_seu_jeito";  // Nome do banco de dados
 
 // Criação da conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
