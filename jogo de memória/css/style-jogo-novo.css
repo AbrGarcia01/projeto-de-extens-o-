@@ -13,8 +13,8 @@ body {
     background-color: #e5e5ec;
     color: black;
     margin: 0;
-    height: 100vh; /* Garante que o corpo ocupe 100% da altura da tela */
-    overflow: hidden; /* Impede rolagem na tela */
+    height: 100vh;
+    overflow: hidden; 
 }
 
 header {
@@ -98,20 +98,20 @@ nav ul li a:hover {
     width: 90%;
     margin-bottom: 10px;
     margin-left: 50px;
-    flex-grow: 1; /* Garantir que o contêiner de jogo ocupe o máximo possível */
-    height: 100%; /* Garantir que o contêiner de jogo ocupe toda a altura */
+    flex-grow: 1; 
+    height: 100%; 
 }
 
 .memory-game {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
-    grid-template-rows: repeat(4, 1fr); /* 4 linhas */
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(4, 1fr); 
     gap: 10px;
-    max-width: 600px; /* Limitar a largura máxima do tabuleiro */
-    max-height: 600px; /* Limitar a altura máxima do tabuleiro */
-    margin: auto; /* Centralizar o tabuleiro na tela */
+    max-width: 600px;
+    max-height: 600px; 
+    margin: auto; 
     perspective: 1000px;
 }
 
